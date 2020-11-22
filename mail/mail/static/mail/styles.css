@@ -1,0 +1,9 @@
+textarea {
+    min-height: 400px;
+    resize: none;
+}
+
+.c, .c:hover {
+    color: black;
+    text-decoration: none;
+}
