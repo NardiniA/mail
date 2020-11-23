@@ -58,8 +58,6 @@ function load_mailbox(mailbox) {
 }
 
 function view_email(id) {
-  console.log("Email View");
-  
   fetch(`emails/${id}`)
   .then(response => response.json())
   .then(email => {
@@ -112,7 +110,9 @@ function view_email(id) {
       let archive = document.createElement("button");
       archive.addEventListener('click', () => {
         archive_email(email.id, email.archived);
+        console.log("Archive Email");
         view_email(email.id);
+        console.log("Archive 1 Done");
       });
       archive.classList.add("btn");
       archive.classList.add("btn-outline-primary");
@@ -134,8 +134,9 @@ function inbox() {
   .then(response => response.json())
   .then(emails => {
     console.log(emails);
+    console.log("Inbox");
 
-    listView("Archived", emails);
+    listView("New", emails);
   });
 }
 
@@ -146,8 +147,9 @@ function sent() {
   .then(response => response.json())
   .then(emails => {
     console.log(emails);
+    console.log("Sent");
 
-    listView("Archived", emails);
+    listView("Sent", emails);
   });
 }
 
@@ -158,6 +160,7 @@ function archive() {
   .then(response => response.json())
   .then(emails => {
     console.log(emails);
+    console.log("Archive");
 
     listView("Archived", emails);
   });
@@ -167,10 +170,12 @@ function read_email(id) {
   fetch(`/emails/${id}`, {
     method: 'PUT',
     body: JSON.stringify({
-      read: false
+      read: true
     })
   });
+  console.log("Read Email");
   view_email(id);
+  console.log("Read Done");
 }
 
 function archive_email(id, archived) {
@@ -180,7 +185,9 @@ function archive_email(id, archived) {
       archived: !archived
     })
   });
+  console.log("Archive Email");
   view_email(id);
+  console.log("Archive Done");
 }
 
 function send_mail() {
@@ -221,7 +228,9 @@ function listView(mailbox, emails) {
 
       let card = document.createElement("button");
       card.addEventListener('click', function() {
+        console.log("View Email");
         view_email(email.id);
+        console.log("View Email Done");
       });
       card.setAttribute("id", `${email.id}`);
       card.classList.add("card");
