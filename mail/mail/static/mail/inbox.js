@@ -36,7 +36,7 @@ function compose_reply(email) {
   } else {
     document.querySelector('#compose-subject').value = `Re: ${email.subject}`;
   }
-  document.querySelector('#compose-body').value = `On ${email.timestamp} ${email.sender} wrote: `;
+  document.querySelector('#compose-body').value = `On ${email.timestamp} ${email.sender} wrote: ${email.body}\n\n`;
 }
 
 function load_mailbox(mailbox) {
@@ -210,7 +210,6 @@ function send_mail() {
     // Print result
     console.log(result);
   });
-  load_mailbox('sent');
 }
 
 function listView(mailbox, emails) {
@@ -227,18 +226,17 @@ function listView(mailbox, emails) {
       email = emails[i];
 
       let card = document.createElement("button");
-      card.addEventListener('click', function() {
-        console.log("View Email");
-        view_email(email.id);
-        console.log("View Email Done");
-      });
       card.setAttribute("id", `${email.id}`);
+      card.addEventListener('click', () => {
+        view_email(card.id);
+      });
       card.classList.add("card");
       card.classList.add("w-100");
       card.classList.add("text-left");
       card.classList.add("my-3");
       if (!email.read) {
         card.classList.add("bg-white");
+        card.classList.add("border-primary");
       } else {
         card.classList.add("bg-light")
       }
